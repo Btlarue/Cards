@@ -30,6 +30,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -39,48 +40,71 @@ import org.junit.jupiter.api.Test;
  */
 public class UnitTestDeck {
 
-  TestDeck td;
-  List<Card> deck;
+  Deck deck;
+  Deck threeDecks;
 
   @BeforeEach
-  void setUp() throws Exception {
-    td = new TestDeck();
-    deck = new ArrayList<>(td.getCollection());
+  void setUp() {
+    deck = new Deck();
+    threeDecks = new Deck(3);
   }
 
   @AfterEach
-  void tearDown() throws Exception {
-    td = null;
-    deck.clear();
+  void tearDown() {
+    deck.clearDeck();
+    threeDecks.clearDeck();
     deck = null;
+    threeDecks = null;
   }
 
   @Test
-  void testdeck_FullDeckShouldContain52Cards() {
-    assertEquals(deck.size(), 52,
-        "The deck without jokers does not have 52 cards, it has " + deck.size());
+  void testDeck_FullDeckShouldContain52Cards() {
+    assertEquals(deck.numberOfCards(), 52,
+        "The deck without jokers does not have 52 cards, it has " + deck.numberOfCards());
   }
 
   @Test
-  void PlayingCardsLeft_AfterRemovingACardFromFullDeckShouldEqual51Cards() {
-    td.removeCard(new PlayingCard(Rank.ACE, Suit.DIAMONDS));
-    assertEquals(td.numberOfCards(), 51,
-        "test deck does not have 51 cards it has: " + td.numberOfCards());
+  void testDeck_ThreeDecksShouldContain156Cards() {
+    assertEquals(threeDecks.numberOfCards(), 156,
+        "3 decks without jokers does not have 156 (52x3) cards. It instead has: " + threeDecks
+            .numberOfCards());
   }
 
   @Test
-  void testIsShuffled_ShouldBeTrue() {
-    td.shuffle();
-    assertTrue(td.isShuffled());
+  void testDeck_AfterClearingDeckNumberOfCardsShouldBe0() {
+    deck.clearDeck();
+    assertEquals(deck.numberOfCards(), 0);
+  }
+
+  @Test
+  void testDeck_FullDeckContainsAceOfDiamondsShouldBeTrue() {
+    var aceOfDiamonds = new PlayingCard(Rank.ACE, Suit.DIAMONDS);
+    assertTrue(deck.containsCard(aceOfDiamonds),
+        "A full deck should contain a Ace of Diamonds");
+  }
+
+  @Test
+  void testDeck_AfterRemovingCardFromFullDeckShouldNowEqual51Cards() {
+    var aceOfDiamonds = new PlayingCard(Rank.ACE, Suit.DIAMONDS);
+    assertTrue(deck.containsCard(aceOfDiamonds),
+        "A full deck should contain a Ace of Diamonds");
+    deck.removeCard(aceOfDiamonds);
+    assertFalse(deck.containsCard(aceOfDiamonds),
+        "After removing Ace of Diamonds, it should no longer be in the deck");
+  }
+
+  @Test
+  void testDeck_AfterShufflingDeckIsShuffledShouldBeTrue() {
+    deck.shuffle(3);
+    assertTrue(deck.isShuffled(),
+        "The deck should be shuffled, however it says: " + deck.isShuffled());
   }
 
   @Test
   void testRemoveCard_AfterRemoveACardInDeckShouldNotBeContainedInDeck() {
     var fiveOfHearts = new PlayingCard(Rank.FIVE, Suit.HEARTS);
-    td.removeCard(fiveOfHearts);
-    deck.clear();
-    deck.addAll(td.getCollection());
-    assertFalse(deck.contains(fiveOfHearts),
+    deck.removeCard(fiveOfHearts);
+    assertFalse(deck.containsCard(fiveOfHearts),
         "The deck still contains the fiveOfHearts. This should not be true.");
   }
 

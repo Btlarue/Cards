@@ -38,16 +38,16 @@ import org.junit.jupiter.api.Test;
 public class UnitTestHand {
 
   TestHand hand;
-  TestDeck deck;
+  Deck deck;
 
   @BeforeEach
-  void setUp() throws Exception {
+  void setUp() {
     hand = new TestHand();
-    deck = new TestDeck();
+    deck = new Deck();
   }
 
   @AfterEach
-  void tearDown() throws Exception {
+  void tearDown() {
     hand.clearHand();
     hand = null;
     deck = null;
