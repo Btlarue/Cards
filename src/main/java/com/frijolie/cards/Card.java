@@ -24,10 +24,12 @@
 package com.frijolie.cards;
 
 /**
- * Card is an interface representing a playing card in a classic deck of cards. It assumes all cards
- * have a <code>Rank</code> (Ace through King), <code>Suit</code> (Hearts, Clubs, Spades, and Diamonds)
- * and a value. Each card will inevitably need to be compared (ranked) against other similar cards.
- * These cards are intended to be reused in various games that involve a playing card.
+ * Card is an interface representing the required behavior of a card in a classic deck of playing cards.
+ * It assumes all cards have a <code>Rank</code>, <code>Suit</code> and a value. Valid PlayingCard
+ * rank values are Ace, 2, 3,...10, Jack, Queen, and King. Valid suits are: Clubs, Diamonds, Spades,
+ * and Hearts. PlayingCard values are determined by the rank of the card. Each card will inevitably
+ * need to be compared with other cards. Therefore all classes that implement this interface will
+ * need to override equals(), hashcode(), and compareTo() to provide a means of comparison among cards.
  *
  * @author  Frijolie
  * @version 0.1
@@ -38,27 +40,21 @@ package com.frijolie.cards;
 public interface Card extends Comparable<Card> {
 
   /**
-   * returns a String representation of the card containing a <code>Rank</code> and <code>Suit</code>.
-   *
-   * @return  "&lt;rank&gt; of &lt;suit&gt;";
-   * @since   0.1
-   */
-  String toString();
-
-  /**
-   * An accessor method that returns the int value of the <code>Card</code>.
-   * <p>This value is inherently coupled with the <code>Rank</code> of the card</p>
+   * An accessor method that returns the int value of the <code>Card</code>. The value is inherently
+   * coupled with the <code>Rank</code> of the card
    *
    * @return  an int value of a card
    * @since   0.1
+   * @see     Rank
+   * @see     Rank#getValue()
    */
   int getValue();
 
   /**
-   * An accessor method which returns the Rank of the card.
-   * <p>Rank is an enumeration, it could return a value from Ace through King.</p>
+   * An accessor method which returns the Rank of the card. Rank is an enumeration of values a card
+   * could possess. A card rank could return a value from Ace, 2, 3, ... , 10, Jack, Queen, or King.
    *
-   * @return  a constant of the Rank enum type
+   * @return a constant value of the Rank enum type
    * @see     Rank
    * @since   0.1
    *
@@ -66,39 +62,42 @@ public interface Card extends Comparable<Card> {
   Rank getRank();
 
   /**
-   * An accessor method which returns the Suit of the card.
-   * <p>Suit is an enumeration, it could return HEARTS, CLUBS, DIAMONDS, or SPADES.</p>
+   * An accessor method which returns the Suit of the card. Suit is an enumeration of values a card
+   * could possess. A card Suit could return a value from Hearts, Clubs, Diamonds, or Spades.
    *
-   * @return  a constant of the Suit enum type.
+   * @return a constant value of the Suit enum type.
    * @see     Suit
    * @since   0.1
    */
   Suit getSuit();
 
   /**
-   * A method to display the card onscreen, currently in the console.
+   * An accessor method which returns the Color of the card. Color is an enumeration of values a card
+   * coulc possess. A card Color could return a value of either Red or Black.
+   *
+   * @return the color of the suit of the card. Will return either Color.RED or Color.BLACK
+   * @since 0.1
+   * @see     Suit
+   */
+  Color getColor();
+
+  /**
+   * A method to display the card onscreen, whether it be in the console or a graphical interface.
    *
    * @since 0.1
    */
   void displayCard();
 
   /**
-   * A method used to test for equality between Cards.
+   * {@inheritDoc}
    *
-   * @param o the card being compared to this card
-   * @return  <code>false</code> if is not an instanceof Card or they are not equal.
-   *          <code>true</code> if this card and the one compared reference the same Object
+   * @since 0.1
    */
   boolean equals(final Object o);
 
   /**
-   * A method to generate a unique integer value for every card.
-   * <p>A salt value is added to the ordinal values of Rank and Suit. This value is then multiplied
-   * by another salt value to generate the hashcode of a card.</p>
+   * {@inheritDoc}
    *
-   * @return  an int value of a card
-   * @see     Rank
-   * @see     Suit
    * @since   0.1
    */
   int hashCode();

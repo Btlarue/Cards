@@ -37,12 +37,12 @@ import org.junit.jupiter.api.Test;
  */
 public class UnitTestHand {
 
-  TestHand hand;
+  Hand hand;
   Deck deck;
 
   @BeforeEach
   void setUp() {
-    hand = new TestHand();
+    hand = new Hand();
     deck = new Deck();
   }
 
@@ -88,21 +88,22 @@ public class UnitTestHand {
         "After removing a card, the deck should only have 51 cards.");
     assertEquals(hand.numberOfCards(), 1,
         "After receiving a card, the hand should have only one card.");
-    assertTrue(hand.getCollection().contains(new PlayingCard(Rank.ACE, Suit.SPADES)));
-    assertFalse(hand.getCollection().contains(new PlayingCard(Rank.NINE, Suit.CLUBS)));
+    assertTrue(hand.getUnmodifiableCollection().contains(new PlayingCard(Rank.ACE, Suit.SPADES)));
+    assertFalse(hand.getUnmodifiableCollection().contains(new PlayingCard(Rank.NINE, Suit.CLUBS)));
   }
 
   @Test
   void testRemoveCard_ShouldNotContainEightOfDiamondsAfterItHasBeenRemoved() {
     hand.addCard(new PlayingCard(Rank.EIGHT, Suit.DIAMONDS));
-    assertFalse(hand.getCollection().isEmpty());
-    assertTrue(hand.getCollection().contains(new PlayingCard(Rank.EIGHT, Suit.DIAMONDS)));
+    assertFalse(hand.getUnmodifiableCollection().isEmpty());
+    assertTrue(
+        hand.getUnmodifiableCollection().contains(new PlayingCard(Rank.EIGHT, Suit.DIAMONDS)));
   }
 
   @Test
   void testDisplayHand() {
     setRoyalFlush();
-    assertFalse(hand.getCollection().isEmpty());
+    assertFalse(hand.getUnmodifiableCollection().isEmpty());
     assertEquals(hand.numberOfCards(), 5,
         "Hand should contain five cards, instead it has " + hand.numberOfCards());
   }
@@ -110,7 +111,7 @@ public class UnitTestHand {
   @Test
   void testCalculateValue_RoyalFlushShouldBeWorth41Points() {
     setRoyalFlush();
-    assertFalse(hand.getCollection().isEmpty());
+    assertFalse(hand.getUnmodifiableCollection().isEmpty());
     assertEquals(hand.numberOfCards(), 5,
         "Hand should contain five cards, instead it has " + hand.numberOfCards());
     // Ace = 1, King = 10, Queen = 10, Jack = 10, 10 = 10. HandValue should equal 41
@@ -121,18 +122,18 @@ public class UnitTestHand {
   @Test
   void testClearHand_ShouldBeEmtpyAfterAddingThenClearingHand() {
     setRoyalFlush();
-    assertFalse(hand.getCollection().isEmpty());
+    assertFalse(hand.getUnmodifiableCollection().isEmpty());
     assertEquals(hand.numberOfCards(), 5,
         "Hand should contain five cards, instead it has " + hand.numberOfCards());
     hand.clearHand();
-    assertTrue(hand.getCollection().isEmpty(),
+    assertTrue(hand.getUnmodifiableCollection().isEmpty(),
         "After clearing the hand, it should be empty. However, it's not.");
   }
 
   @Test
   void testNumberOfCards_ShouldBeEqualTo5AfterAddingRoyalFlush() {
     setRoyalFlush();
-    assertFalse(hand.getCollection().isEmpty());
+    assertFalse(hand.getUnmodifiableCollection().isEmpty());
     assertEquals(hand.numberOfCards(), 5,
         "Hand should contain five cards, instead it has " + hand.numberOfCards());
   }
@@ -141,9 +142,10 @@ public class UnitTestHand {
   @Test
   void testSortBySuit() {
     setSampleHand();
-    assertFalse(hand.getCollection().isEmpty(), "The hand is empty, it should contain eight cards");
-    assertEquals(hand.getCollection().size(), 8,
-        "The hand could contain 8 cards, it has: " + hand.getCollection().size());
+    assertFalse(hand.getUnmodifiableCollection().isEmpty(),
+        "The hand is empty, it should contain eight cards");
+    assertEquals(hand.getUnmodifiableCollection().size(), 8,
+        "The hand could contain 8 cards, it has: " + hand.getUnmodifiableCollection().size());
     System.out.println("\n------ Before SortBySuit -------");
     hand.displayHand();
     hand.sortBySuit();
@@ -155,9 +157,10 @@ public class UnitTestHand {
   @Test
   void testSortByColor() {
     setSampleHand();
-    assertFalse(hand.getCollection().isEmpty(), "The hand is empty, it should contain eight cards");
-    assertEquals(hand.getCollection().size(), 8,
-        "The hand could contain 8 cards, it has: " + hand.getCollection().size());
+    assertFalse(hand.getUnmodifiableCollection().isEmpty(),
+        "The hand is empty, it should contain eight cards");
+    assertEquals(hand.getUnmodifiableCollection().size(), 8,
+        "The hand could contain 8 cards, it has: " + hand.getUnmodifiableCollection().size());
     System.out.println("\n------ Before SortByColor -------");
     hand.displayHand();
     hand.sortByColor();
@@ -169,9 +172,10 @@ public class UnitTestHand {
   @Test
   void testSortByRank() {
     setSampleHand();
-    assertFalse(hand.getCollection().isEmpty(), "The hand is empty, it should contain eight cards");
-    assertEquals(hand.getCollection().size(), 8,
-        "The hand could contain 8 cards, it has: " + hand.getCollection().size());
+    assertFalse(hand.getUnmodifiableCollection().isEmpty(),
+        "The hand is empty, it should contain eight cards");
+    assertEquals(hand.getUnmodifiableCollection().size(), 8,
+        "The hand could contain 8 cards, it has: " + hand.getUnmodifiableCollection().size());
     System.out.println("\n------ Before SortByRank -------");
     hand.displayHand();
     hand.sortByRank();
@@ -183,9 +187,10 @@ public class UnitTestHand {
   @Test
   void testSort() {
     setSampleHand();
-    assertFalse(hand.getCollection().isEmpty(), "The hand is empty, it should contain eight cards");
-    assertEquals(hand.getCollection().size(), 8,
-        "The hand could contain 8 cards, it has: " + hand.getCollection().size());
+    assertFalse(hand.getUnmodifiableCollection().isEmpty(),
+        "The hand is empty, it should contain eight cards");
+    assertEquals(hand.getUnmodifiableCollection().size(), 8,
+        "The hand could contain 8 cards, it has: " + hand.getUnmodifiableCollection().size());
     System.out.println("\n------ Before Sort -------");
     hand.displayHand();
     hand.sort();

@@ -26,12 +26,13 @@ package com.frijolie.cards;
 import java.util.Objects;
 
 /**
- * A concrete class used to implement behavior of a playing card. Implements the interface Card.
+ * A concrete class used to implement behavior of an individual playing card. This implements the Card
+ * interface. Each PlayingCard has a <code>Rank</code> and a <code>Suit</code>.
  *
- * <p>This object assumes that each card has a <code>Rank</code>, <code>Suit</code>, and value.</p>
  * @author  Frijolie
  * @version 0.1
  * @since   0.1
+ * @see     Card
  * @see     Rank
  * @see     Suit
  */
@@ -41,7 +42,9 @@ public class PlayingCard implements Card {
   private final Suit suit;
 
   /**
-   * Class constructor. Used to initialize instance variables with values.
+   * Class constructor. Used to initialize instance variables with constant values. There are no
+   * default values to provide. Rank and Suit always need to be supplied to instantiate a card.
+   *
    * @param rank  the cards rank
    * @param suit  the cards suit
    * @see   Rank
@@ -53,9 +56,10 @@ public class PlayingCard implements Card {
   }
 
   /**
-   * An accessor method which returns the <code>Suit</code> of the card
+   * An accessor method which returns the <code>Suit</code> of the card. The values of a PlayingCard
+   * suit are are: Hearts, Clubs, Diamonds, or Spades.
    *
-   * @return  the card suit (Hearts, Clubs, Spades, or Diamonds)
+   * @return the card suit Hearts, Clubs, Spades, or Diamonds
    * @see     Suit
    * @since   0.1
    */
@@ -65,9 +69,10 @@ public class PlayingCard implements Card {
   }
 
   /**
-   * An accessor method which returns the <code>Color</code> of the card <code>Suit</code>.
+   * An accessor method which returns the <code>Color</code> of the card, usually associated with the
+   * card's <code>Suit</code>. Color values of a PlayingCard are: Red or Black
    *
-   * @return  the cards suit color
+   * @return the color of the cards suit: Red or Black
    * @see     Color
    * @see     Suit
    * @see     Suit#getColor()
@@ -78,9 +83,10 @@ public class PlayingCard implements Card {
   }
 
   /**
-   * An accessor method which returns the <code>Rank</code> of the card.
+   * An accessor method which returns the <code>Rank</code> of the card. Values of a card rank are:
+   * Ace, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, and King.
    *
-   * @return  the card Rank enumeration value.
+   * @return the Rank of the playing card: [A,2,3,4,5,6,7,8,9,10,J,Q,K]
    * @see     Rank
    * @since   0.1
    */
@@ -90,9 +96,10 @@ public class PlayingCard implements Card {
   }
 
   /**
-   * Displays a phrase of a card, utilizing the letter and symbol. For example, "A(Heart)"
+   * Displays a description phrase of the card, utilizing the rank letter and suit symbol.
+   * For example, "A(Heart)"
    *
-   * @return  a string representation of the card utilizing the letter and symbol
+   * @return a string description of the card utilizing the rank letter and suit symbol
    * @see     Rank#getLetter()
    * @see     Suit#getSymbol()
    * @since   0.1
@@ -114,7 +121,7 @@ public class PlayingCard implements Card {
   }
 
   /**
-   * Returns the int value of the card.
+   * Returns the int value of the card. PlayingCard value is coupled with the card Rank.
    *
    * @return the int value of the card.
    * @see     Rank

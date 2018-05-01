@@ -24,9 +24,8 @@
 package com.frijolie.cards;
 
 /**
- * An enumeration to list all possible values of a <code>Color</code> in a <code>Suit</code>.
- *
- * <p>Values are Black or Red. These are assigned to every <code>Suit</code></p>.
+ * An enumeration of all possible values of a <code>Color</code> in a <code>Suit</code>. Values are:
+ * Black or Red. These are assigned to every Suit.
  *
  * @author  Frijolie
  * @version 0.1

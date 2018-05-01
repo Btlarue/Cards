@@ -30,14 +30,17 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Deck is used to represent a collection of classic playing cards.
- *
- * <p>A default deck is populated with 52 playing cards.
+ * The Deck class represents a collection of all possible cards in a deck of playing cards. A standard
+ * deck contains 52 cards and does not contain Jokers. The default constructor creates a single deck.
+ * An overloaded constructor provides the ability to create more than one deck at instantiation. This
+ * class provides means to shuffle the deck one or more times. The deck will also know if it has been
+ * shuffled. The deck can also be cleared and repopulated. Purposely there are no methods which allow
+ * cards to be added to the deck. Cards may be removed but never added. An unmodifiable collection
+ * is returned when requested.
  *
  * @author Frijolie
  * @version 0.1
  * @since 0.1
- * @see     Card
  * @see     Rank
  * @see     Suit
  */
@@ -47,7 +50,7 @@ public class Deck {
   private List<Card> deck;
 
   /**
-   * Default constructor. Will initialize the collection with a single deck of 52 cards
+   * Default constructor. Will initialize the deck with 52 cards
    *
    * @since 0.1
    */
@@ -79,7 +82,7 @@ public class Deck {
   }
 
   /**
-   * Overloaded shuffle method. Will accept input to shuffle multiple times.
+   * Overloaded shuffle method. Will allow shuffling the deck multiple times
    *
    * @param numberOfTimes the amount of times to shuffle the collection
    * @since 0.1
@@ -92,9 +95,9 @@ public class Deck {
   }
 
   /**
-   * A method which returns a boolean value indicating if the collection has been shuffled.
+   * A method which returns a boolean value indicating if the collection has ever been shuffled.
    *
-   * @return <code>true</code> if the collection has ever been shuffled
+   * @return  <code>true</code> if the collection has ever been shuffled
    * @since 0.1
    */
   public boolean isShuffled() {
@@ -105,7 +108,7 @@ public class Deck {
    * A method which returns a value representing the number of cards remaining in the deck.
    *
    * @return the number of cards remaining in the deck
-   * @see 0.1
+   * @see     0.1
    */
   public int numberOfCards() {
     return deck.size();
@@ -129,7 +132,7 @@ public class Deck {
   }
 
   /**
-   * A method to determine if a certain card is contained in the deck
+   * A method to determine if a specific card is contained in the deck
    *
    * @param card the card to check if it resides in the deck
    * @return <code>true</code> if the card is in the deck
@@ -163,13 +166,14 @@ public class Deck {
   }
 
   /**
-   * An abstract method to return a generic collection.
+   * A method to return an unmodifiable collection which represents the deck. All mutations have to
+   * be done within the Class which implements the Deck interface.
    *
    * @return the collection of cards (deck)
    * @since 0.1
    */
-  public Collection<Card> getCollection() {
-    return deck;
+  public Collection<Card> getUnmodifiableCollection() {
+    return new ArrayList<>(deck);
   }
 
 }
