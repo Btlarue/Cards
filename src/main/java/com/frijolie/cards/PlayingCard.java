@@ -40,6 +40,7 @@ public class PlayingCard implements Card {
 
   private final Rank rank;
   private final Suit suit;
+  private boolean isFaceUp;
 
   /**
    * Class constructor. Used to initialize instance variables with constant values. There are no
@@ -159,6 +160,22 @@ public class PlayingCard implements Card {
     int suitMultiplier = suit.ordinal() + 2;
     int rankMultiplier = rank.ordinal() + 3;
     return (suitMultiplier * rankMultiplier) * 31;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void flip() {
+    isFaceUp = !isFaceUp;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean isFaceUp() {
+    return isFaceUp;
   }
 
   /**

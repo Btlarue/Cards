@@ -102,4 +102,19 @@ public interface Card extends Comparable<Card> {
    */
   int hashCode();
 
+  /**
+   * A method to flip the card face up (if face down) or face down (if face up).
+   *
+   * @since 0.1
+   */
+  void flip();
+
+  /**
+   * A method to determine if the card is face up. Should display the card back if face down.
+   *
+   * @return <code>true</code> if the card is face up.
+   * @since 0.1
+   */
+  boolean isFaceUp();
+
 }
