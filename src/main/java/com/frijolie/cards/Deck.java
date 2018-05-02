@@ -26,9 +26,8 @@ package com.frijolie.cards;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Stack;
 
 /**
  * The Deck class represents a collection of all possible cards in a deck of playing cards. A standard
@@ -48,7 +47,7 @@ import java.util.Objects;
 public class Deck {
 
   private boolean isShuffled;
-  private List<Card> deck;
+  private Stack<Card> deck;
 
   /**
    * Default constructor. Will initialize the deck with 52 cards
@@ -66,7 +65,7 @@ public class Deck {
    * @since 0.1
    */
   public Deck(int numberOfDecks) {
-    deck = new ArrayList<>();
+    deck = new Stack<>();
     clearDeck();
     for (int i = 0; i < numberOfDecks; i++) {
       populateDeck();
@@ -178,19 +177,15 @@ public class Deck {
   }
 
   /**
-   * A method to return the first element in the list. Will throw a NoSuchElementException if the
+   * A method to return the first element in the list. Will throw an EmptyStackExcpetion if the
    * deck is empty.
    *
    * @return Card that was removed from the collection
-   * @throws NoSuchElementException if the deck is empty
+   * @throws java.util.EmptyStackException if the deck is empty
    * @since 0.1
    */
   public Card pop() {
-    if (deck.isEmpty()) {
-      throw new NoSuchElementException("There is no card to remove, the deck is empty");
-    } else {
-      return deck.remove(0);
-    }
+    return deck.pop();
   }
 
 }
