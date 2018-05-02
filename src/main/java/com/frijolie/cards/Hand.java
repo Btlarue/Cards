@@ -195,4 +195,13 @@ public class Hand implements Comparable<Hand> {
     cards.sort((Card first, Card second) -> first.compareTo(second));
   }
 
+  /**
+   * A method which allows a card, at a specified index, to be flipped (face up/down)
+   *
+   * @param index the index of the card to be flipped
+   * @see 0.1
+   */
+  public void flipCard(int index) {
+    cards.get(index).flip();
+  }
 }
