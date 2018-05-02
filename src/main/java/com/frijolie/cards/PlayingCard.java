@@ -54,6 +54,7 @@ public class PlayingCard implements Card {
   public PlayingCard(final Rank rank, final Suit suit) {
     this.rank = rank;
     this.suit = suit;
+    isFaceUp = true;
   }
 
   /**
