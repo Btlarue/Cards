@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
@@ -174,6 +175,22 @@ public class Deck {
    */
   public Collection<Card> getUnmodifiableCollection() {
     return new ArrayList<>(deck);
+  }
+
+  /**
+   * A method to return the first element in the list. Will throw a NoSuchElementException if the
+   * deck is empty.
+   *
+   * @return Card that was removed from the collection
+   * @throws NoSuchElementException if the deck is empty
+   * @since 0.1
+   */
+  public Card pop() {
+    if (deck.isEmpty()) {
+      throw new NoSuchElementException("There is no card to remove, the deck is empty");
+    } else {
+      return deck.remove(0);
+    }
   }
 
 }
