@@ -80,12 +80,18 @@ public class Hand implements Comparable<Hand> {
   }
 
   /**
-   * A method to display the hand, on the standard output
+   * A method to display the hand, on the standard output if the card is face up.
    *
    * @since 0.1
    */
   public void displayHand() {
-    System.out.println(cards);
+    for (Card card : cards) {
+      if (card.isFaceUp()) {
+        card.displayCard();
+      } else {
+        System.out.println("[ Card Back ]");
+      }
+    }
   }
 
   /**
