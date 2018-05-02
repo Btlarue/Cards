@@ -157,6 +157,18 @@ public class Deck {
   }
 
   /**
+   * A method to populate the deck with more than one deck of 52 cards.
+   *
+   * @param numberOfDecks the number of decks to initialize
+   * @since 0.1
+   */
+  public void populateDeck(int numberOfDecks) {
+    for (int i = 0; i < numberOfDecks; i++) {
+      populateDeck();
+    }
+  }
+
+  /**
    * A method to remove all cards from the deck.
    *
    * @since 0.1
