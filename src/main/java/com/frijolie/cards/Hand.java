@@ -1,26 +1,3 @@
-/*
- * The MIT License
- *
- * Copyright (c) 2018 Frijolie.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
 package com.frijolie.cards;
 
 import java.util.ArrayList;
@@ -55,7 +32,6 @@ public class Hand implements Comparable<Hand> {
    *
    * @param card the element to add to the collection
    * @see Card
-   * @since 0.1
    */
   public void addCard(Card card) {
     cards.add(Objects.requireNonNull(card));
@@ -80,21 +56,6 @@ public class Hand implements Comparable<Hand> {
   }
 
   /**
-   * A method to display the hand, on the standard output if the card is face up.
-   *
-   * @since 0.1
-   */
-  public void displayHand() {
-    for (Card card : cards) {
-      if (card.isFaceUp()) {
-        card.displayCard();
-      } else {
-        System.out.println("[ Card Back ]");
-      }
-    }
-  }
-
-  /**
    * A method to calculate the cumulative value of all cards in the hand.
    *
    * @return an int value of all the cards in the hand
@@ -111,8 +72,6 @@ public class Hand implements Comparable<Hand> {
 
   /**
    * A method to remove all cards from the hand.
-   *
-   * @since 0.1
    */
   public void clearHand() {
     cards.clear();
@@ -122,7 +81,6 @@ public class Hand implements Comparable<Hand> {
    * A method to return the number of cards remaining in the hand.
    *
    * @return a count of the number of cards remaining in the hand
-   * @since 0.1
    */
   public int numberOfCards() {
     return cards.size();
@@ -163,7 +121,7 @@ public class Hand implements Comparable<Hand> {
    * A method to sort the cards in the hand by color. Does not factor suit within the color. This
    * will sort cards in this order: all red cards, then all black cards.
    *
-   * @see Color
+   * @see CardColor
    * @see Card#getColor()
    * @since 0.1
    */
@@ -183,25 +141,4 @@ public class Hand implements Comparable<Hand> {
     cards.sort(Comparator.comparing(Card::getRank));
   }
 
-  /**
-   * A method to sort all cards in the hand by Suit (red, black, red, black) then Rank (Ace - King)
-   * in ascending order. This is the default sorting method.
-   *
-   * @see Rank
-   * @see Suit
-   * @since 0.1
-   */
-  public void sort() {
-    cards.sort((Card first, Card second) -> first.compareTo(second));
-  }
-
-  /**
-   * A method which allows a card, at a specified index, to be flipped (face up/down)
-   *
-   * @param index the index of the card to be flipped
-   * @see 0.1
-   */
-  public void flipCard(int index) {
-    cards.get(index).flip();
-  }
 }

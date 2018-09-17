@@ -1,154 +1,57 @@
-/*
- * The MIT License
- *
- * Copyright (c) 2018 Frijolie.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
 package com.frijolie.cards;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Objects;
-import java.util.Stack;
+import java.util.List;
 
 /**
- * The Deck class represents a collection of all possible cards in a deck of playing cards. A standard
- * deck contains 52 cards and does not contain Jokers. The default constructor creates a single deck.
- * An overloaded constructor provides the ability to create more than one deck at instantiation. This
- * class provides means to shuffle the deck one or more times. The deck will also know if it has been
- * shuffled. The deck can also be cleared and repopulated. Purposely there are no methods which allow
- * cards to be added to the deck. Cards may be removed but never added. An unmodifiable collection
- * is returned when requested.
+ * A Deck represents a collection of {@link PlayingCard}s. A standard deck of playing cards contains
+ * 52 cards. A deck is an enumeration of cards for every rank within every suit.
+ * <p>
+ * The default no-arg constructor will create a single deck of unshuffled cards. There is also an
+ * overloaded constructor which allows the creation of multiple decks of cards and the ability to
+ * shuffle the deck after instantiation.
  *
  * @author Frijolie
  * @version 0.1
- * @since 0.1
- * @see     Rank
- * @see     Suit
+ * @see {@link PlayingCard}
  */
 public class Deck {
 
-  private boolean isShuffled;
-  private Stack<Card> deck;
+  /**
+   * A List to contain all of the cards in the deck.
+   */
+  private final List<Card> deck;
 
   /**
-   * Default constructor. Will initialize the deck with 52 cards
-   *
-   * @since 0.1
+   * Default zero-arg constructor. Will instantiate a single unshuffled deck of cards.
    */
   public Deck() {
-    this(1);
+    this(1, false);
   }
 
   /**
-   * Overloaded constructor. Will initialize the collection with multiple decks of cards
+   * Overloaded constructor. Allows for multiple decks and the ability to have it shuffled after it
+   * has been created.
    *
-   * @param numberOfDecks an integer value to represent the number of decks to initialize
-   * @since 0.1
+   * @param numOfDecks the number of decks to create
+   * @param shuffled {@code true} if you wish to shuffle the deck
    */
-  public Deck(int numberOfDecks) {
-    deck = new Stack<>();
-    clearDeck();
-    for (int i = 0; i < numberOfDecks; i++) {
+  public Deck(int numOfDecks, boolean shuffled) {
+    deck = new ArrayList<>();
+    for (int i = 0; i < numOfDecks; i++) {
       populateDeck();
     }
-  }
-
-  /**
-   * A method to shuffle the collection. By default, will shuffle only once.
-   *
-   * @since 0.1
-   */
-  public void shuffle() {
-    shuffle(1);
-  }
-
-  /**
-   * Overloaded shuffle method. Will allow shuffling the deck multiple times
-   *
-   * @param numberOfTimes the amount of times to shuffle the collection
-   * @since 0.1
-   */
-  public void shuffle(int numberOfTimes) {
-    isShuffled = true;
-    for (int i = 0; i < numberOfTimes; i++) {
-      Collections.shuffle(deck);
+    if (shuffled) {
+      shuffle();
     }
   }
 
   /**
-   * A method which returns a boolean value indicating if the collection has ever been shuffled.
-   *
-   * @return  <code>true</code> if the collection has ever been shuffled
-   * @since 0.1
+   * Populates the deck with one of every rank within every suit. Will add 52 unique cards to the
+   * deck
    */
-  public boolean isShuffled() {
-    return isShuffled;
-  }
-
-  /**
-   * A method which returns a value representing the number of cards remaining in the deck.
-   *
-   * @return the number of cards remaining in the deck
-   * @see     0.1
-   */
-  public int numberOfCards() {
-    return deck.size();
-  }
-
-  /**
-   * A method to remove a card from the deck.
-   *
-   * @param card the card to remove from the deck
-   * @return the card which has been removed from the deck
-   * @see Card
-   * @since 0.1
-   */
-  public Card removeCard(Card card) {
-    if (deck.contains(Objects.requireNonNull(card))) {
-      int index = deck.indexOf(card);
-      return deck.remove(index);
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * A method to determine if a specific card is contained in the deck
-   *
-   * @param card the card to check if it resides in the deck
-   * @return <code>true</code> if the card is in the deck
-   * @since 0.1
-   */
-  public boolean containsCard(Card card) {
-    return deck.contains(Objects.requireNonNull(card));
-  }
-
-  /**
-   * A method to populate the deck with all possible 52 cards.
-   *
-   * @see Card
-   * @since 0.1
-   */
-  public void populateDeck() {
+  private void populateDeck() {
     for (Suit suit : Suit.values()) {
       for (Rank rank : Rank.values()) {
         deck.add(new PlayingCard(rank, suit));
@@ -157,47 +60,18 @@ public class Deck {
   }
 
   /**
-   * A method to populate the deck with more than one deck of 52 cards.
-   *
-   * @param numberOfDecks the number of decks to initialize
-   * @since 0.1
+   * Returns an unmodifiable copy of the current deck of cards.
+   * @return the current deck of cards.
    */
-  public void populateDeck(int numberOfDecks) {
-    for (int i = 0; i < numberOfDecks; i++) {
-      populateDeck();
-    }
+  public List<Card> getDeck() {
+    return List.copyOf(deck);
   }
 
   /**
-   * A method to remove all cards from the deck.
-   *
-   * @since 0.1
+   * Shuffles the current deck of cards
    */
-  public void clearDeck() {
-    deck.clear();
-  }
-
-  /**
-   * A method to return an unmodifiable collection which represents the deck. All mutations have to
-   * be done within the Class which implements the Deck interface.
-   *
-   * @return the collection of cards (deck)
-   * @since 0.1
-   */
-  public Collection<Card> getUnmodifiableCollection() {
-    return new ArrayList<>(deck);
-  }
-
-  /**
-   * A method to return the first element in the list. Will throw an EmptyStackExcpetion if the
-   * deck is empty.
-   *
-   * @return Card that was removed from the collection
-   * @throws java.util.EmptyStackException if the deck is empty
-   * @since 0.1
-   */
-  public Card pop() {
-    return deck.pop();
+  private void shuffle() {
+    Collections.shuffle(deck);
   }
 
 }

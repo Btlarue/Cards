@@ -1,196 +1,130 @@
-/*
- * The MIT License
- *
- * Copyright (c) 2018 Frijolie.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
 package com.frijolie.cards;
 
 import java.util.Objects;
 
 /**
- * A concrete class used to implement behavior of an individual playing card. This implements the Card
- * interface. Each PlayingCard has a <code>Rank</code> and a <code>Suit</code>.
+ * A PlayingCard is a concrete class used to represent a single card in a deck of cards. Every
+ * playing card will have a {@link Rank} and {@link Suit}. Each of these cards will need to be
+ * compared with other PlayingCards.
  *
- * @author  Frijolie
+ * @author Frijolie
  * @version 0.1
- * @since   0.1
- * @see     Card
- * @see     Rank
- * @see     Suit
+ * @see Rank
+ * @see Suit
  */
-public class PlayingCard implements Card {
-
-  private final Rank rank;
-  private final Suit suit;
-  private boolean isFaceUp;
+public class PlayingCard implements Card, Comparable {
 
   /**
-   * Class constructor. Used to initialize instance variables with constant values. There are no
-   * default values to provide. Rank and Suit always need to be supplied to instantiate a card.
-   *
-   * @param rank  the cards rank
-   * @param suit  the cards suit
-   * @see   Rank
-   * @see   Suit
+   * The cards Rank. Values are ACE, TWO, THREE ... TEN, JACK, QUEEN, KING.
+   */
+  private final Rank rank;
+  /**
+   * The card's Suit. Valid values are: CLUBS, DIAMONDS, SPADES, or HEARTS.
+   */
+  private final Suit suit;
+
+  /**
+   * Constructor. Must provide a {@link Rank} and {@link Suit}
+   * @param rank of the card
+   * @param suit of the card
    */
   public PlayingCard(final Rank rank, final Suit suit) {
     this.rank = rank;
     this.suit = suit;
-    isFaceUp = true;
   }
 
-  /**
-   * An accessor method which returns the <code>Suit</code> of the card. The values of a PlayingCard
-   * suit are are: Hearts, Clubs, Diamonds, or Spades.
-   *
-   * @return the card suit Hearts, Clubs, Spades, or Diamonds
-   * @see     Suit
-   * @since   0.1
-   */
   @Override
-  public Suit getSuit() {
-    return suit;
+  public int getValue() {
+    return rank.getValue();
   }
 
-  /**
-   * An accessor method which returns the <code>Color</code> of the card, usually associated with the
-   * card's <code>Suit</code>. Color values of a PlayingCard are: Red or Black
-   *
-   * @return the color of the cards suit: Red or Black
-   * @see     Color
-   * @see     Suit
-   * @see     Suit#getColor()
-   * @since   0.1
-   */
-  public Color getColor() {
-    return suit.getColor();
-  }
-
-  /**
-   * An accessor method which returns the <code>Rank</code> of the card. Values of a card rank are:
-   * Ace, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, and King.
-   *
-   * @return the Rank of the playing card: [A,2,3,4,5,6,7,8,9,10,J,Q,K]
-   * @see     Rank
-   * @since   0.1
-   */
   @Override
   public Rank getRank() {
     return rank;
   }
 
   /**
-   * Displays a description phrase of the card, utilizing the rank letter and suit symbol.
-   * For example, "A(Heart)"
-   *
-   * @return a string description of the card utilizing the rank letter and suit symbol
-   * @see     Rank#getLetter()
-   * @see     Suit#getSymbol()
-   * @since   0.1
+   * Returns the representation of the Card rank, as a single character. For example, '5' or 'Q'
+   * @return a character representation of the card Rank
    */
-  @Override
-  public String toString() {
-    return rank.getLetter() + suit.getSymbol();
+  public char getRankLetter() {
+    return rank.getLetter();
   }
 
   /**
-   * Displays the card using the standard output
+   * Returns the representation of the Card rank as a word. For example, "Ten" or "King"
    *
-   * @see   #toString()
-   * @since 0.1
+   * @return the string representation of the card Rank
    */
+  public String getRankName() {
+    return rank.getName();
+  }
+
   @Override
-  public void displayCard() {
-    System.out.println(toString());
+  public Suit getSuit() {
+    return suit;
+  }
+
+  public String getSuitName() {
+    return suit.getName();
+  }
+
+  @Override
+  public CardColor getColor() {
+    return suit.getColor();
   }
 
   /**
-   * Returns the int value of the card. PlayingCard value is coupled with the card Rank.
-   *
-   * @return the int value of the card.
-   * @see     Rank
-   * @see     Rank#getValue()
-   * @since   0.1
+   * Returns the representation of the cards suit as a unicode character.
+   * @return the cards rank, represented as a symbol
    */
-  @Override
-  public int getValue() {
-    return rank.getValue();
+  public char getSymbol() {
+    return suit.getSymbol();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public boolean equals(final Object o) {
-    Objects.requireNonNull(o);
-    boolean isEqual;
-    if (!(o instanceof Card)) {
-      isEqual = false;
-    } else if (this == o) {
-      isEqual = true;
-    } else {
-      var card = (Card) o;
-      isEqual = (this.getRank().equals(card.getRank()) && this.suit.equals(card.getSuit()));
+  public boolean equals(Object o) {
+    Objects.requireNonNull(o, "The object for comparison must not be null");
+    if (this == o) {
+      return true;
     }
-    return isEqual;
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Card that = (Card) o;
+    return getRank() == that.getRank() && getSuit() == that.getSuit();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int hashCode() {
-    int suitMultiplier = suit.ordinal() + 2;
-    int rankMultiplier = rank.ordinal() + 3;
-    return (suitMultiplier * rankMultiplier) * 31;
+    return Objects.hash(getRank(), getSuit());
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public void flip() {
-    isFaceUp = !isFaceUp;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isFaceUp() {
-    return isFaceUp;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public int compareTo(Card o) {
-    var card = Objects.requireNonNull(o);
-    var suitCompareResult = this.suit.compareTo(card.getSuit());
-    if (suitCompareResult != 0) {
-      return suitCompareResult;
+  public int compareTo(Object o) {
+    Objects.requireNonNull(o, "The card used for comparison must not be null");
+    Card card = (Card) o;
+    int suitOrdinal = suit.compareTo(card.getSuit());
+    if (suitOrdinal != 0) {
+      return suitOrdinal;
     } else {
-      return this.rank.compareTo(card.getRank());
+      return rank.compareTo(card.getRank());
     }
+  }
+
+  @Override
+  public String toString() {
+    return Character.toString(getRankLetter()) + Character.toString(suit.getSymbol());
+  }
+
+  /**
+   * Returns {@code true} if the color of this card is the same as the one being compared.
+   * @param card to be compared with this card
+   * @return {@code true} if the colors are the same
+   */
+  public boolean sameColor(Card card) {
+    Objects.requireNonNull(card, "You must pass a non null card for comparison.");
+    return getColor() == card.getColor();
   }
 
 }

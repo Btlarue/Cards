@@ -1,92 +1,78 @@
-/*
- * The MIT License
- *
- * Copyright (c) 2018 Frijolie.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
 package com.frijolie.cards;
 
 /**
- * An enumeration of all possible suits of a <code>Card</code>. Values are: Clubs, Diamonds, Spades, and Hearts.
+ * Suit is an enumeration of all possible values for a {@link PlayingCard} suit. Each constant
+ * contains a Name, Symbol, and {@link CardColor}. Valid values are: CLUBS, DIAMONDS, SPADES, and
+ * HEARTS.
+ * <p>
+ * These values are listed in a specific order as to alternate colors so they are aesthetically
+ * pleasing when displayed in a collection.
  *
- * <p>These values are listed in specific order as to alternate colors so they are aesthetically pleasing.
- * There are other convenience properties of a <code>Suit</code>. The symbol is a unicode character
- * used to represent the suit. Each suit is inherently associated with a <code>Color</code> (Black or Red).
- *
- * @author  Frijolie
+ * @author Frijolie
  * @version 0.1
- * @since   0.1
- * @see     Card
- * @see     Color
+ * @see PlayingCard
+ * @see CardColor
  */
 public enum Suit {
-
-  CLUBS("Clubs", '\u2663', Color.BLACK),
-  DIAMONDS("Diamonds", '\u2666', Color.RED),
-  SPADES("Spades", '\u2660', Color.BLACK),
-  HEARTS("Hearts", '\u2764', Color.RED);
-
-  private final String name;
-  private final char symbol;
-  private final Color color;
+  CLUBS("Clubs", '\u2663', CardColor.BLACK),
+  DIAMONDS("Diamonds", '\u2666', CardColor.RED),
+  SPADES("Spades", '\u2660', CardColor.BLACK),
+  HEARTS("Hearts", '\u2764', CardColor.RED);
 
   /**
-   * Suit constructor. Used to instantiate constant values.
-   *
-   * @param name  a word used to represent the constant value
-   * @param symbol  a unicode character used to represent the suit
-   * @param color an enumerated Color value (Black or Red)
-   * @see   Color
+   * The representation of the Suit in the form of a word. For example, "Diamonds"
    */
-  Suit(final String name, final char symbol, final Color color) {
+  private final String name;
+  /**
+   * The representation of the Suit in the form of a single character. For example, ♠
+   */
+  private final char symbol;
+  /**
+   * The representation of the CardColor in the form of an enum Constant. For example,
+   * CardColor.BLACK
+   */
+  private final CardColor color;
+
+  /**
+   * Constructor. Must supply a Name, Symbol, and CardColor.
+   *
+   * @param name the string representation of the card to be assigned
+   * @param symbol the single character used to represent the suit.
+   * @param color the color of the card
+   */
+  Suit(String name, char symbol, CardColor color) {
     this.name = name;
     this.symbol = symbol;
     this.color = color;
   }
 
   /**
-   * An accessor method to retrieve the Suit symbol.
+   * Returns the String representation of the Suit in the form of a word. For example, "Hearts"
    *
-   * @return  the unicode character which represents the Suit symbol
-   * @since   0.1
+   * @return the name of the Suit
+   */
+  public String getName() {
+    return name;
+  }
+
+  /**
+   * Returns the char representation of the Suit in the form of a unicode character. For example, ♠
+   *
+   * @return the suit symbol as a single unicode character
    */
   public char getSymbol() {
     return symbol;
   }
 
   /**
-   * An accessor method to retrieve the Suit Color enumerated value
+   * Returns the CardColor of the suit. For example, CardColor.RED
    *
-   * @return  the value of the Color enumerated value (Black or Red)
-   * @since   0.1
+   * @return the color of the suit
    */
-  public Color getColor() {
+  public CardColor getColor() {
     return color;
   }
 
-  /**
-   * A method which returns a String representation of a Suit value.
-   *
-   * @return  a word used to represent the Suit constant value
-   * @since   0.1
-   */
   @Override
   public String toString() {
     return name;
